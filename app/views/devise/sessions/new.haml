@@ -1,0 +1,8 @@
+.col-md-5.mx-auto
+  %h3.text-center Log in
+  = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+    = f.input :email
+    = f.input :password
+    = f.input :remember_me, as: :boolean
+    = f.button :submit, 'Log in', class: 'btn btn-outline-success mb-2'
+  = render 'devise/shared/links'
