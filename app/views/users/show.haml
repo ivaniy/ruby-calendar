@@ -1,0 +1,10 @@
+%h3.text-center User
+.row.mt-3
+  .col-md-4
+    = image_tag 'profile_icon.png', class: 'img-fluid'
+  .col-md-8
+    %b= @user.name
+    %b= @user.surname
+    %hr
+    %p= @user.email
+= link_to '<< Back', :back, class: 'btn btn-light mt-2'
