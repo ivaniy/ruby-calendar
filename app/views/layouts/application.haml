@@ -10,7 +10,8 @@
   %body
     .container
       %nav
-        = link_to 'Users', root_path
+        = link_to 'Calendar', root_path
+        = link_to 'Users', users_path
         - if user_signed_in?
           Logged in as
           %strong= current_user.email
