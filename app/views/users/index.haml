@@ -1,1 +1,9 @@
-%h3 All users
+%h3.text-center All users
+.row
+  - @users.each do |user|
+    .col-md-3
+      .card.mt-3
+        = image_tag 'profile_icon.png', class: 'card-img-top mx-auto mt-2', style: 'width: 50%'
+        .card-body
+          %p= user.email
+          = link_to 'Show more >>', user_path(user)
