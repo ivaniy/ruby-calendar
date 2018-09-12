@@ -19,4 +19,11 @@ describe UsersController do
       expect(response).to render_template(:show)
     end
   end
+
+  describe 'GET #calendar' do
+    it 'renders calendar template' do
+      get :calendar
+      expect(response).to render_template(:calendar)
+    end
+  end
 end

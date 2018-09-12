@@ -40,6 +40,7 @@ gem 'bootstrap'
 gem 'devise'
 gem 'haml'
 gem 'simple_form'
+gem 'simple_calendar'
 
 group :development, :test do
   gem 'pry-rails'
