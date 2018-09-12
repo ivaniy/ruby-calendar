@@ -8,16 +8,18 @@
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
-    .container
-      %nav
-        = link_to 'Calendar', root_path
-        = link_to 'Users', users_path
-        - if user_signed_in?
-          Logged in as
-          %strong= current_user.email
-          = link_to 'Edit profile', edit_user_registration_path
-          = link_to 'Log out', destroy_user_session_path, method: :delete
-        - else
-          = link_to 'Sign up', new_user_registration_path
-          = link_to 'Log in', new_user_session_path
+    %nav.navbar.navbar-light.bg-light.navbar-expand-lg
+      .container
+        %ul.navbar-nav
+          %li.nav-item= link_to 'Calendar', root_path, class: 'nav-link'
+          %li.nav-item= link_to 'Users', users_path, class: 'nav-link'
+        %ul.navbar-nav.ml-auto
+          - if user_signed_in?
+            %li.nav-item.nav-link.active Logged in as #{current_user.email}
+            %li.nav-item= link_to 'Edit profile', edit_user_registration_path, class: 'nav-link'
+            %li.nav-item= link_to 'Log out', destroy_user_session_path, method: :delete, class: 'nav-link'
+          - else
+            %li.nav-item= link_to 'Sign up', new_user_registration_path, class: 'nav-link'
+            %li.nav-item= link_to 'Log in', new_user_session_path, class: 'nav-link'
+    .container.mt-2
       = yield
