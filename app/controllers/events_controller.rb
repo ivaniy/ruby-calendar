@@ -2,7 +2,7 @@ class EventsController < ApplicationController
   before_action :load_event, only: [:show, :edit, :update, :destroy]
 
   def index
-    @events = current_user.events.sort_by { |e| e.start_at }
+    @events = current_user.events.sort_by(&:start_at)
   end
 
   def show; end
