@@ -17,8 +17,8 @@ ActiveRecord::Schema.define(version: 2018_09_13_110453) do
     t.string "description"
     t.string "location"
     t.date "date"
-    t.time "start_at"
-    t.time "end_at"
+    t.time "start_event"
+    t.time "end_event"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

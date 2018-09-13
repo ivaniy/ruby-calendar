@@ -3,14 +3,12 @@ class Event < ApplicationRecord
   validates :name, presence: true, length: { in: 1..30 }
   validates :description, length: { maximum: 500 }
   validates :location, length: { maximum: 100 }
-  validates :date, presence: true
-  validate :end_must_be_after_start
-  
+  validates :date, :start_event, :end_event, presence: true
+  validate :start_end_times
+
   private
 
-  def end_must_be_after_start
-    if end_at < start_at
-      errors.add(:end_at, 'must be after start time')
-    end
+  def start_end_times
+    errors.add(:end_event, 'must be after start time') if end_event < start_event
   end
 end

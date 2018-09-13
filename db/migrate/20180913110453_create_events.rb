@@ -5,8 +5,8 @@ class CreateEvents < ActiveRecord::Migration[5.2]
       t.string :description
       t.string :location
       t.date :date
-      t.time :start_at
-      t.time :end_at
+      t.time :start_event
+      t.time :end_event
       t.references :user, foreign_key: true
 
       t.timestamps

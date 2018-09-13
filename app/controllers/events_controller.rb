@@ -2,7 +2,7 @@ class EventsController < ApplicationController
   before_action :load_event, only: [:show, :edit, :update, :destroy]
 
   def index
-    @events = current_user.events.sort_by { |e| e.start_at }
+    @events = current_user.events.sort_by(&:start_event)
   end
 
   def show; end
@@ -38,10 +38,10 @@ class EventsController < ApplicationController
   private
 
   def load_event
-    @event = Event.find(params[:id])
+    @event = Event.find_by(id: params[:id]) || not_found
   end
 
   def event_params
-    params.require(:event).permit(:name, :description, :location, :date, :start_at, :end_at)
+    params.require(:event).permit(:name, :description, :location, :date, :start_event, :end_event)
   end
 end
