@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  root 'users#calendar'
+  root 'events#index'
   devise_for :users
-  resources :users, only: [:index, :show, :calendar]
+  resources :users, only: [:index, :show]
+  resources :events
 end
