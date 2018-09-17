@@ -7,10 +7,10 @@
         %td= @event.date
       %tr
         %td.text-right.text-secondary start time:
-        %td= @event.start_at.strftime('%R')
+        %td= @event.start_event.strftime('%R')
       %tr
         %td.text-right.text-secondary end time:
-        %td= @event.end_at.strftime('%R')
+        %td= @event.end_event.strftime('%R')
       %tr
         %td.text-right.text-secondary description:
         %td= @event.description

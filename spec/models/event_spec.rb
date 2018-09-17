@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Event, type: :model do
   describe 'validations' do
-    subject { create :event }
+    subject { create :valid_event }
 
     it { is_expected.to validate_presence_of(:name) }
 
@@ -16,7 +16,7 @@ RSpec.describe Event, type: :model do
 
     context 'when start time is more then end time' do
       it 'raises error' do
-        expect { create(:event, start_at: Faker::Time.forward(10, :evening), end_at: Faker::Time.forward(10, :morning)) }.to raise_error(/must be after start time/)
+        expect { create(:invalid_event) }.to raise_error(/must be after start time/)
       end
     end
   end

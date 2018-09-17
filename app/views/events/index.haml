@@ -5,5 +5,5 @@
   - events.each do |event|
     %div
       = link_to event do
-        %small= event.start_at.strftime('%R')
+        %small= event.start_event.strftime('%R')
         %b= event.name

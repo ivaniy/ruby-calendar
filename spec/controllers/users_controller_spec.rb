@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe UsersController do
   let!(:user) { create(:user) }
-  before(:each) do
+  before do
     sign_in user
   end
 
