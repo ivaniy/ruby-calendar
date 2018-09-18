@@ -1,0 +1,9 @@
+%h3.text-center Calendar
+= link_to 'New event', new_event_path, class: 'btn btn-outline-success mb-2'
+= month_calendar events: @events, attribute: :date do |date, events|
+  = date.strftime('%d')
+  - events.each do |event|
+    %div
+      = link_to event do
+        %small= event.start_event.strftime('%R')
+        %b= event.name

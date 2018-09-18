@@ -1,0 +1,8 @@
+= simple_form_for event do |f|
+  = f.input :name
+  = f.input :description
+  = f.input :location
+  = f.input :date, as: :date
+  = f.input :start_event, as: :time, label: 'Start time'
+  = f.input :end_event, as: :time, label: 'End time'
+  = f.button :submit, class: 'btn btn-outline-success'

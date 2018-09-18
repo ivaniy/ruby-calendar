@@ -1,0 +1,23 @@
+.col-md-8.mx-auto
+  %h3.text-center= @event.name
+  %table.table.table-hover
+    %tbody
+      %tr
+        %td.text-right.text-secondary date:
+        %td= @event.date
+      %tr
+        %td.text-right.text-secondary start time:
+        %td= @event.start_event.strftime('%R')
+      %tr
+        %td.text-right.text-secondary end time:
+        %td= @event.end_event.strftime('%R')
+      %tr
+        %td.text-right.text-secondary description:
+        %td= @event.description
+      %tr
+        %td.text-right.text-secondary location:
+        %td= @event.location
+  = link_to 'Edit', edit_event_path(@event), class: 'btn btn-outline-success'
+  = link_to 'Delete', @event, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger'
+  %br
+  = link_to '<< Back', :back, class: 'btn btn-light mt-2'
