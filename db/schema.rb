@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_13_110453) do
+ActiveRecord::Schema.define(version: 2018_09_21_111333) do
 
   create_table "events", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -19,10 +19,23 @@ ActiveRecord::Schema.define(version: 2018_09_13_110453) do
     t.date "date"
     t.time "start_event"
     t.time "end_event"
-    t.bigint "user_id"
+    t.string "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_events_on_user_id"
+  end
+
+  create_table "events_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "event_id"
+    t.bigint "user_id"
+    t.bigint "role_id"
+    t.string "state"
+    t.index ["event_id"], name: "index_events_users_on_event_id"
+    t.index ["role_id"], name: "index_events_users_on_role_id"
+    t.index ["user_id"], name: "index_events_users_on_user_id"
+  end
+
+  create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "role"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -44,5 +57,4 @@ ActiveRecord::Schema.define(version: 2018_09_13_110453) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "events", "users"
 end
