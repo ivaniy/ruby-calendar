@@ -1,8 +1,11 @@
 class Event < ApplicationRecord
-  has_many :events_users
+  has_many :events_users, inverse_of: :event
   has_many :users, through: :events_users
-  has_many :participants, -> { joins(:events_users).where('events_users.user_role = ?', 1) }, through: :events_users, source: :user
-  has_many :guests, -> { joins(:events_users).where('events_users.user_role = ?', 2) }, through: :events_users, source: :user
+  has_many :participants, -> { participant }, class_name: 'EventsUser', inverse_of: :event
+  has_many :guests, -> { guest }, class_name: 'EventsUser', inverse_of: :event
+
+  has_many :participants_users, through: :participants, source: :user
+  has_many :guests_users, through: :guests, source: :user
 
   validates :name, presence: true, length: { in: 1..30 }
   validates :description, length: { maximum: 500 }
