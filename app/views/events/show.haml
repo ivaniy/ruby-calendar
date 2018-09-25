@@ -33,7 +33,12 @@
           - @event.guests_users.each do |guest|
             = link_to guest.name, user_path(guest)
             %br
-  = link_to 'Edit', edit_event_path(@event), class: 'btn btn-outline-success'
-  = link_to 'Delete', @event, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger'
+  - if @event.users.creator == current_user
+    = link_to 'Edit', edit_event_path(@event), class: 'btn btn-outline-success'
+    = link_to 'Delete', @event, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger'
+  - else
+    = link_to 'Accept', accept_event_path(@event), method: :patch, class: 'btn btn-sm btn-outline-success'
+    = link_to 'Maybe', maybe_event_path(@event), method: :patch, class: 'btn btn-sm btn-outline-info'
+    = link_to 'Decline', decline_event_path(@event), method: :patch, class: 'btn btn-sm btn-outline-danger'
   %br
   = link_to '<< Back', :back, class: 'btn btn-light mt-2'

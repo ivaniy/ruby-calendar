@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   before_action :load_event, only: [:show, :edit, :update, :destroy]
+  before_action :load_events_user, only: [:accept, :maybe, :decline]
 
   def index
     @events = current_user.events.sort_by(&:start_event)
@@ -36,10 +37,42 @@ class EventsController < ApplicationController
     redirect_to root_path
   end
 
+  def accept
+    if @events_user.may_accept?
+      @events_user.accept!
+      redirect_to action: :show
+    else
+      redirect_to root_path
+    end
+  end
+
+  def maybe
+    if @events_user.may_maybe?
+      @events_user.maybe!
+      redirect_to action: :show
+    else
+      redirect_to root_path
+    end
+  end
+
+  def decline
+    if @events_user.may_decline?
+      @events_user.decline!
+      redirect_to action: :show
+    else
+      redirect_to root_path
+    end
+  end
+
   private
 
   def load_event
     @event = Event.find_by(id: params[:id]) || not_found
+  end
+
+  def load_events_user
+    load_event
+    @events_user = @event.events_users.find_by(user: current_user) || not_found
   end
 
   def event_params
