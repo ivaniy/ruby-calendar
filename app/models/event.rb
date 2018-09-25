@@ -1,6 +1,10 @@
 class Event < ApplicationRecord
   has_many :events_users, inverse_of: :event
-  has_many :users, through: :events_users
+  has_many :users, through: :events_users do
+    def creator
+      where('events_users.user_role = ?', 0).first
+    end
+  end
   has_many :participants, -> { participant }, class_name: 'EventsUser', inverse_of: :event
   has_many :guests, -> { guest }, class_name: 'EventsUser', inverse_of: :event
 

@@ -17,6 +17,22 @@
       %tr
         %td.text-right.text-secondary location:
         %td= @event.location
+      %tr
+        %td.text-right.text-secondary organizer:
+        %td
+          = link_to @event.users.creator.name, user_path(@event.users.creator)
+      %tr
+        %td.text-right.text-secondary participants:
+        %td
+          - @event.participants_users.each do |participant|
+            = link_to participant.name, user_path(participant)
+            %br
+      %tr
+        %td.text-right.text-secondary guests:
+        %td
+          - @event.guests_users.each do |guest|
+            = link_to guest.name, user_path(guest)
+            %br
   = link_to 'Edit', edit_event_path(@event), class: 'btn btn-outline-success'
   = link_to 'Delete', @event, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger'
   %br
