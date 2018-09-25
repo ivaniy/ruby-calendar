@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
-  before_action :load_event, only: [:show, :edit, :update, :destroy]
-  before_action :load_events_user, only: [:accept, :maybe, :decline]
+  before_action :load_event, except: [:index, :new, :create]
+  before_action :load_events_user, only: [:show, :accept, :maybe, :decline]
 
   def index
     @events = current_user.events.sort_by(&:start_event)
@@ -17,17 +17,21 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(event_params)
     if @event.save
-      EventsUser.create(event: @event, user: current_user, user_role: 0)
+      EventsUser.create(event: @event, user: current_user, user_role: 0, state: 'accepted')
+      flash[:notice] = 'Event was successfully created'
       redirect_to root_path
     else
+      flash[:alert] = 'Event was not created'
       render 'new'
     end
   end
 
   def update
     if @event.update(event_params)
+      flash[:notice] = 'Event was successfully updated'
       redirect_to root_path
     else
+      flash[:alert] = 'Event was not updated'
       render 'edit'
     end
   end
@@ -37,30 +41,11 @@ class EventsController < ApplicationController
     redirect_to root_path
   end
 
-  def accept
-    if @events_user.may_accept?
-      @events_user.accept!
+  EventsUser.aasm.events.map(&:name).each do |response|
+    define_method(response) do
+      @events_user.send("#{response}!")
+      flash[:notice] = "You #{response} this event"
       redirect_to action: :show
-    else
-      redirect_to root_path
-    end
-  end
-
-  def maybe
-    if @events_user.may_maybe?
-      @events_user.maybe!
-      redirect_to action: :show
-    else
-      redirect_to root_path
-    end
-  end
-
-  def decline
-    if @events_user.may_decline?
-      @events_user.decline!
-      redirect_to action: :show
-    else
-      redirect_to root_path
     end
   end
 
@@ -71,7 +56,6 @@ class EventsController < ApplicationController
   end
 
   def load_events_user
-    load_event
     @events_user = @event.events_users.find_by(user: current_user) || not_found
   end
 

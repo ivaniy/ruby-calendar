@@ -20,25 +20,30 @@
       %tr
         %td.text-right.text-secondary organizer:
         %td
-          = link_to @event.users.creator.name, user_path(@event.users.creator)
+          = link_to @event.creator.first.name, user_path(@event.creator.first)
       %tr
         %td.text-right.text-secondary participants:
         %td
           - @event.participants_users.each do |participant|
             = link_to participant.name, user_path(participant)
+            - if @event.creator.first == current_user
+              %span (#{@event.events_users.find_by(user: participant).state})
             %br
       %tr
         %td.text-right.text-secondary guests:
         %td
           - @event.guests_users.each do |guest|
             = link_to guest.name, user_path(guest)
+            - if @event.creator.first == current_user
+              %span (#{@event.events_users.find_by(user: guest).state})
             %br
-  - if @event.users.creator == current_user
+  - if @event.creator.first == current_user
     = link_to 'Edit', edit_event_path(@event), class: 'btn btn-outline-success'
     = link_to 'Delete', @event, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-danger'
-  - else
+  - elsif @events_user.ignored? || @events_user.tentative?
     = link_to 'Accept', accept_event_path(@event), method: :patch, class: 'btn btn-sm btn-outline-success'
-    = link_to 'Maybe', maybe_event_path(@event), method: :patch, class: 'btn btn-sm btn-outline-info'
+    - unless @events_user.tentative?
+      = link_to 'Maybe', maybe_event_path(@event), method: :patch, class: 'btn btn-sm btn-outline-info'
     = link_to 'Decline', decline_event_path(@event), method: :patch, class: 'btn btn-sm btn-outline-danger'
   %br
   = link_to '<< Back', :back, class: 'btn btn-light mt-2'

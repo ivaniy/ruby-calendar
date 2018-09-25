@@ -8,12 +8,10 @@ class EventsUser < ApplicationRecord
 
   aasm column: 'state' do
     state :ignored, initial: true
-    state :accepted
-    state :tentative
-    state :declined
+    state :accepted, :tentative, :declined
 
     event :accept do
-      transitions from: :ignored, to: :accepted
+      transitions from: [:ignored, :tentative], to: :accepted
     end
 
     event :maybe do
@@ -21,7 +19,7 @@ class EventsUser < ApplicationRecord
     end
 
     event :decline do
-      transitions from: :ignored, to: :declined
+      transitions from: [:ignored, :tentative], to: :declined
     end
   end
 end
