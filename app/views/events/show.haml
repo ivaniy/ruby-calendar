@@ -27,7 +27,7 @@
           - @event.participants_users.each do |participant|
             = link_to participant.name, user_path(participant)
             - if @event.creator == current_user
-              %span (#{@event.events_users.find_by(user: participant).state})
+              %span (#{events_user_state(@event, participant)})
             %br
       %tr
         %td.text-right.text-secondary guests:
@@ -35,7 +35,7 @@
           - @event.guests_users.each do |guest|
             = link_to guest.name, user_path(guest)
             - if @event.creator == current_user
-              %span (#{@event.events_users.find_by(user: guest).state})
+              %span (#{events_user_state(@event, guest)})
             %br
   - if @event.creator == current_user
     = link_to 'Edit', edit_event_path(@event), class: 'btn btn-outline-success'

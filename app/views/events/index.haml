@@ -4,6 +4,18 @@
   = date.strftime('%d')
   - events.each do |event|
     %div
+      = event_badge(event)
       = link_to event do
         %small= event.start_event.strftime('%R')
         %b= event.name
+%span.badge.badge-primary c
+%span - you created this event
+%br
+%span.badge.badge-success a
+%span - you accepted this event
+%br
+%span.badge.badge-secondary m
+%span - maybe you will be on this event
+%br
+%span.badge.badge-danger n
+%span - new event
