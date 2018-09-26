@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   before_action :load_event, except: [:index, :new, :create]
-  before_action :load_events_user, only: [:show, :accept, :maybe, :decline]
+  before_action :load_events_user, only: [:show, :cancel, :remove, :accept, :maybe, :decline]
 
   def index
     @events = current_user.events.active_events.sort_by(&:start_event)
@@ -36,8 +36,15 @@ class EventsController < ApplicationController
     end
   end
 
-  def destroy
-    @event.destroy
+  def cancel
+    @event.cancel!
+    @events_user.decline!
+    flash[:notice] = 'Event was canceled'
+    redirect_to root_path
+  end
+
+  def remove
+    @events_user.decline!
     redirect_to root_path
   end
 

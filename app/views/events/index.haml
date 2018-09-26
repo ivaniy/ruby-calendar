@@ -3,7 +3,7 @@
 = month_calendar events: @events, attribute: :date do |date, events|
   = date.strftime('%d')
   - events.each do |event|
-    %div
+    %div{style: ('text-decoration: line-through' if event.canceled?)}
       = event_badge(event)
       = link_to event do
         %small= event.start_event.strftime('%R')

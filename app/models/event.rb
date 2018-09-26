@@ -1,4 +1,6 @@
 class Event < ApplicationRecord
+  include AASM
+
   ACTIVE_STATES = %w[accepted ignored tentative].freeze
 
   has_many :events_users, inverse_of: :event
@@ -19,6 +21,15 @@ class Event < ApplicationRecord
   validate :start_end_times
 
   scope :active_events, -> { joins(:events_users).where('events_users.state': ACTIVE_STATES).uniq }
+
+  aasm column: 'state' do
+    state :active, initial: true
+    state :canceled
+
+    event :cancel do
+      transitions from: :active, to: :canceled
+    end
+  end
 
   private
 

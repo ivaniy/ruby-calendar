@@ -19,7 +19,7 @@ class EventsUser < ApplicationRecord
     end
 
     event :decline do
-      transitions from: [:ignored, :tentative], to: :declined
+      transitions from: [:ignored, :tentative, :accepted], to: :declined
     end
   end
 end

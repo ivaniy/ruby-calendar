@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show]
   resources :events do
     member do
+      patch :cancel
+      patch :remove
       patch :accept
       patch :maybe
       patch :decline
