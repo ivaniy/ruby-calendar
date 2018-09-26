@@ -1,4 +1,6 @@
 class Event < ApplicationRecord
+  ACTIVE_STATES = %w[accepted ignored tentative].freeze
+
   has_many :events_users, inverse_of: :event
   has_many :users, through: :events_users
   has_many :participants, -> { participant }, class_name: 'EventsUser', inverse_of: :event
@@ -15,6 +17,8 @@ class Event < ApplicationRecord
   validates :location, length: { maximum: 100 }
   validates :date, :start_event, :end_event, presence: true
   validate :start_end_times
+
+  scope :active_events, -> { joins(:events_users).where('events_users.state': ACTIVE_STATES).uniq }
 
   private
 

@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   before_action :load_events_user, only: [:show, :accept, :maybe, :decline]
 
   def index
-    @events = current_user.events.sort_by(&:start_event)
+    @events = current_user.events.active_events.sort_by(&:start_event)
   end
 
   def show; end
