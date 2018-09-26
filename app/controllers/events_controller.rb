@@ -19,6 +19,7 @@ class EventsController < ApplicationController
     if @event.save
       EventsUser.create(event: @event, user: current_user, user_role: 0, state: 'accepted')
       flash[:notice] = 'Event was successfully created'
+      send_email_to_invited_users('invitation_to_event', @event)
       redirect_to root_path
     else
       flash[:alert] = 'Event was not created'
@@ -40,6 +41,7 @@ class EventsController < ApplicationController
     @event.cancel!
     @events_user.decline!
     flash[:notice] = 'Event was canceled'
+    send_email_to_invited_users('cancel_event', @event)
     redirect_to root_path
   end
 
@@ -52,6 +54,7 @@ class EventsController < ApplicationController
     define_method(response) do
       @events_user.send("#{response}!")
       flash[:notice] = "You #{response} this event"
+      EventMailer.user_response(current_user, @event, response.to_s).deliver_later
       redirect_to action: :show
     end
   end
@@ -64,6 +67,13 @@ class EventsController < ApplicationController
 
   def load_events_user
     @events_user = @event.events_users.find_by(user: current_user) || not_found
+  end
+
+  def send_email_to_invited_users(mailer_method, event)
+    invited_users = event.participants_users + event.guests_users
+    invited_users.each do |invited_user|
+      EventMailer.send(mailer_method, invited_user, event).deliver_later
+    end
   end
 
   def event_params

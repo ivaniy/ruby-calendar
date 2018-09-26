@@ -1,0 +1,4 @@
+%h3 Hello #{@user.name}!
+%p You was invited to event "#{@event.name}".
+%p Click the link below to see event details:
+%p= link_to 'Look at the event', event_url(@event)
