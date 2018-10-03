@@ -1,0 +1,4 @@
+%h3 Hello #{@creator.name}!
+%p #{@user.name} #{@response} your event.
+%p Click the link below to see event details:
+%p= link_to 'Look at the event', event_url(@event)

@@ -3,7 +3,19 @@
 = month_calendar events: @events, attribute: :date do |date, events|
   = date.strftime('%d')
   - events.each do |event|
-    %div
+    %div{style: ('text-decoration: line-through' if event.canceled?)}
+      = event_badge(event)
       = link_to event do
         %small= event.start_event.strftime('%R')
         %b= event.name
+%span.badge.badge-primary c
+%span - you created this event
+%br
+%span.badge.badge-success a
+%span - you accepted this event
+%br
+%span.badge.badge-secondary m
+%span - maybe you will be on this event
+%br
+%span.badge.badge-danger n
+%span - new event

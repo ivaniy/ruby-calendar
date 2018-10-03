@@ -22,4 +22,8 @@
             %li.nav-item= link_to 'Sign up', new_user_registration_path, class: 'nav-link'
             %li.nav-item= link_to 'Log in', new_user_session_path, class: 'nav-link'
     .container.mt-2
+      - flash.each do |message_type, message|
+        %div{class: "alert alert-#{message_type == 'notice' ? 'success' : 'info'}"}
+          %button.close{'data-dismiss': 'alert', type: 'button'} ×
+          #{message}
       = yield

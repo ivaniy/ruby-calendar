@@ -5,4 +5,10 @@
   = f.input :date, as: :date
   = f.input :start_event, as: :time, label: 'Start time'
   = f.input :end_event, as: :time, label: 'End time'
+  %hr
+  = f.association :participants_users, collection: User.all, include_blank: true,
+    input_html: { class: 'chosen-select', 'data-placeholder': 'Select required users' }
+  = f.association :guests_users, collection: User.all, include_blank: true,
+    input_html: { class: 'chosen-select', 'data-placeholder': 'Select guests' }
+  %hr
   = f.button :submit, class: 'btn btn-outline-success'
