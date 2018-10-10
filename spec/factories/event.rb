@@ -6,7 +6,9 @@ FactoryBot.define do
     date Faker::Date.forward(10)
     start_event Faker::Time.forward(10, :morning)
     end_event Faker::Time.forward(10, :evening)
-    user
+    after(:create) do |event|
+      event.users << create(:user)
+    end
   end
 
   factory :invalid_event, class: Event do
@@ -16,6 +18,8 @@ FactoryBot.define do
     date Faker::Date.forward(10)
     start_event Faker::Time.forward(10, :evening)
     end_event Faker::Time.forward(10, :morning)
-    user
+    after(:create) do |event|
+      event.users << create(:user)
+    end
   end
 end

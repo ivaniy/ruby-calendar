@@ -1,10 +1,9 @@
 require 'rails_helper'
 
 describe EventsController do
-  let!(:user) { create(:user) }
-  let!(:valid_event) { create(:valid_event, user: user) }
+  let!(:valid_event) { create(:valid_event) }
 
-  before { sign_in user }
+  before { sign_in valid_event.users.first }
 
   describe 'GET #index' do
     it 'renders index template' do
@@ -47,7 +46,7 @@ describe EventsController do
     end
 
     context 'when event is invalid' do
-      let(:invalid_event) { build(:invalid_event, user: user) }
+      let(:invalid_event) { build(:invalid_event) }
 
       it { expect(invalid_event).not_to be_valid }
 
@@ -80,16 +79,5 @@ describe EventsController do
         is_expected.to render_template(:edit)
       end
     end
-  end
-
-  describe 'DELETE #destroy' do
-    subject { delete :destroy, params: { id: valid_event.id } }
-
-    it 'deletes the event' do
-      subject
-      expect(Event.find_by(id: valid_event.id)).not_to be_present
-    end
-
-    it { is_expected.to redirect_to(root_path) }
   end
 end
