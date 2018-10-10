@@ -22,6 +22,6 @@ RSpec.describe Event, type: :model do
   end
 
   describe 'associations' do
-    it { is_expected.to belong_to(:user) }
+    it { is_expected.to have_many(:users).through(:events_users) }
   end
 end
