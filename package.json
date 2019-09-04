@@ -1,5 +1,5 @@
 {
-  "name": "calendar",
-  "private": true,
-  "dependencies": {}
+    "name": "calendar",
+    "private": true,
+    "dependencies": { }
 }
