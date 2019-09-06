@@ -1,5 +1,5 @@
  pipeline {
-    node('Ruby') {
+    agent { label  'Ruby' }
     stages {
         stage('Build') { 
             steps {
@@ -16,6 +16,5 @@
                echo 'deploying'
             }
         }
-    }
     }
 }
