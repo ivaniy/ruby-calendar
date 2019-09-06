@@ -1,6 +1,6 @@
 # Add your own tasks in files placed in lib/tasks ending in .rake,
 # for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
-# One more feature Feature 2
+# One more feature feature 5 and merge conflicts resolved
 require_relative 'config/application'
 
 
