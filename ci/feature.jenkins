@@ -4,19 +4,19 @@
         stage('Build') { 
             steps {
                 echo 'Building...'
-                ip address
+                sh "ip address"
             }
         }    
         stage('Test') { 
             steps {
                 echo 'testing'
-                whoami
+                sh "whoami"
             }
         }
         stage('Deploy') { 
             steps {
                echo 'deploying'
-               git branch
+               sh "git branch"
             }
         }
     }
