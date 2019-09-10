@@ -1,19 +1,23 @@
- pipeline {
-    agent any 
+pipeline {
+    agent { label 'master' }
     stages {
-        stage('Build') { 
+        stage('Build') {
+            agent {label 'Ruby'}
             steps {
-                echo 'Building...'
-            }
-        }    
-        stage('Test') { 
-            steps {
-                echo 'testing' 
+              echo pullRequest.base
             }
         }
-        stage('Deploy') { 
+        stage('Test on Linux') {
             steps {
-               echo 'deploying'
+              sh "pwd"
+            }
+        }
+        stage('Test on Windows') {
+            agent {
+                label 'Ruby'
+            }
+            steps {
+              sh "git branch"
             }
         }
     }
