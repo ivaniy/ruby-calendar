@@ -6,6 +6,9 @@ pipeline {
     stages {
         stage('Build') {
             agent {label 'Ruby'}
+            when { 
+                changeRequest() 
+            }
             steps {
                 echo "Building...  ${pullRequest.id}"
                 sh "ip address"
