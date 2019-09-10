@@ -7,7 +7,10 @@ pipeline {
         stage('Build') {
             agent {label 'Ruby'}
             steps {
-                echo pullRequest.base()
+                script {
+                   def mybase = pullRequest.base
+                }
+                echo mybase
                 echo 'Building...'
                 sh "ip address"
             }
