@@ -1,15 +1,22 @@
 pipeline {
     agent { label 'master' }
+    options {
+      
+    }
     stages {
         stage('Build') {
             agent {label 'Ruby'}
             steps {
-              echo pullRequest.base
+                echo pullRequest.base
+                echo 'Building...'
+                sh "ip address"
             }
         }
         stage('Test on Linux') {
             steps {
-              sh "pwd"
+                sh "pwd"
+                echo 'testing'
+                sh "whoami"
             }
         }
         stage('Test on Windows') {
@@ -17,7 +24,8 @@ pipeline {
                 label 'Ruby'
             }
             steps {
-              sh "git branch"
+               echo 'deploying'
+               sh "git branch"
             }
         }
     }
