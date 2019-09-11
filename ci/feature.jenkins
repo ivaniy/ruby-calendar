@@ -1,11 +1,35 @@
-properties([disableConcurrentBuilds()])
-
-stage('Build') {
-    node ('Ruby') {
-            echo 'Building...'
-            def scmVars = checkout scm
-            def branchName = scmVars.CHANGE_TARGET
-            echo branchName
-            sh("printenv")
-    }    
+pipeline {
+    agent { label 'master' }
+    options {
+      timestamps()
+    }
+    stages {
+        stage('Build') {
+            agent {label 'Ruby'}
+            when { 
+                changeRequest() 
+            }
+            steps {
+                echo "Building...  ${pullRequest.id}"
+                sh "ip address"
+            }
+        }
+        stage('Test on Linux') {
+            steps {
+                 sh("printenv")
+            }
+        }
+        stage('Test on Windows') {
+            agent {
+                label 'Ruby'
+            }
+            steps {
+                sh("printenv")
+                echo 'testing'
+                sh "whoami"
+               echo 'deploying'
+               sh "git branch"
+            }
+        }
+    }
 }
