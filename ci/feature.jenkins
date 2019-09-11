@@ -24,8 +24,8 @@ pipeline {
                 label 'Ruby'
             }
             steps {
-                echo 'testing'
-                sh "whoami"
+               echo 'testing'
+               sh "whoami"
                echo 'deploying'
                sh "git branch"
             }
