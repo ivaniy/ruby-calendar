@@ -16,7 +16,7 @@ pipeline {
         }
         stage('Test on Linux') {
             steps {
-                echo $GITHUB_PR_SOURCE_BRANCH
+                echo GITHUB_PR_SOURCE_BRANCH
                 sh "pwd"
                 echo 'testing'
                 sh "whoami"
