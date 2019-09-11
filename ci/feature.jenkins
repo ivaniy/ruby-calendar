@@ -7,7 +7,7 @@ stage('Build') {
             def branchName = scmVars.GIT_BRANCH
             echo branchName
             sh "ip address"
-            sh 'scmVars > env.txt' 
+            sh "${scmVars} > env.txt "
             for (String i : readFile('env.txt').split("\r?\n")) {
                      println i
             }
