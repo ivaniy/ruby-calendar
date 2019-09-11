@@ -4,9 +4,7 @@ stage('Build') {
     node ('Ruby') {
             echo 'Building...'
             def scmVars = checkout scm
-            def branchName = scmVars.GIT_BRANCH
+            def branchName = scmVars.CHANGE_TARGET
             echo branchName
-            sh "ip address"
-            echo scmVars
     }    
 }
