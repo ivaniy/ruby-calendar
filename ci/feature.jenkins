@@ -1,39 +1,12 @@
-pipeline {
-    agent { label 'master' }
-    options {
-      timestamps()
-    }
-    stages {
-        stage('Build') {
-            agent {label 'Ruby'}
-            when { 
-                changeRequest() 
-            }
-            steps {
-                echo "Building...  ${pullRequest.id}"
-                sh "ip address"
-            }
-        }
-        stage('Test on Linux') {
-            steps {
-                 sh 'env > env.txt' 
-                 for (String i : readFile('env.txt').split("\r?\n")) {
+properties([disableConcurrentBuilds()])
+
+stage('Build') {
+    node ('Ruby') {
+            echo 'Building...'
+            sh "ip address"
+            sh 'env > env.txt' 
+            for (String i : readFile('env.txt').split("\r?\n")) {
                      println i
-                 }
             }
-        }
-        stage('Test on Windows') {
-            agent {
-                label 'Ruby'
-            }
-            steps {
-                echo env.GITHUB_PR_SOURCE_BRANCH
-                echo "Current Pull Request ID: ${env.CHANGE_ID}"
-                echo 'testing'
-                sh "whoami"
-               echo 'deploying'
-               sh "git branch"
-            }
-        }
-    }
+    }    
 }
