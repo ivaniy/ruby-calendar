@@ -16,10 +16,10 @@ pipeline {
         }
         stage('Test on Linux') {
             steps {
-                echo env.GITHUB_PR_SOURCE_BRANCH
-                echo "Current Pull Request ID: ${env.CHANGE_ID}"
-                echo 'testing'
-                sh "whoami"
+                 sh 'env > env.txt' 
+                 for (String i : readFile('env.txt').split("\r?\n")) {
+                     println i
+                 }
             }
         }
         stage('Test on Windows') {
