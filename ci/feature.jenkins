@@ -6,5 +6,6 @@ stage('Build') {
             def scmVars = checkout scm
             def branchName = scmVars.CHANGE_TARGET
             echo branchName
+            sh("printenv")
     }    
 }
