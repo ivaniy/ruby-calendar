@@ -1,20 +1,35 @@
 pipeline {
-    agent any
-
+    agent { label 'master' }
+    options {
+      timestamps()
+    }
     stages {
         stage('Build') {
+            agent {label 'Ruby'}
+            when { 
+                changeRequest() 
+            }
             steps {
-                echo 'Building..'
+                echo "Building...  ${pullRequest.id}"
+                sh "ip address"
             }
         }
-        stage('Test') {
+        stage('Test on Linux') {
             steps {
-                echo 'Testing..'
+                 sh("printenv")
             }
         }
-        stage('Deploy') {
+        stage('Test on Windows') {
+            agent {
+                label 'Ruby'
+            }
             steps {
-                echo 'Deploying....'
+               sh("printenv")
+               sh "whoami"
+               echo 'deploying'
+               sh "git branch"
+               sh "pwd"
+               sh "ls -al"
             }
         }
     }
