@@ -24,7 +24,6 @@ pipeline {
                 label 'Ruby'
             }
             steps {
-                sh("printenv")
                 echo 'testing'
                 sh "whoami"
                echo 'deploying'
