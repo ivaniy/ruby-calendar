@@ -28,6 +28,7 @@ pipeline {
                sh "whoami"
                echo 'deploying'
                sh "git branch"
+               sh "ls -al"
             }
         }
     }
