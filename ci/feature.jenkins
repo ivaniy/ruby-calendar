@@ -27,6 +27,10 @@ pipeline {
                 label 'Ruby'
             }
             steps {
+                echo env.GITHUB_PR_SOURCE_BRANCH
+                echo "Current Pull Request ID: ${env.CHANGE_ID}"
+                echo 'testing'
+                sh "whoami"
                echo 'deploying'
                sh "git branch"
             }
