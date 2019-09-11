@@ -3,11 +3,14 @@ properties([disableConcurrentBuilds()])
 stage('Build') {
     node ('Ruby') {
             echo 'Building...'
-            checkout scm
+            def scmVars = checkout scm
+            def branchName = scmVars.GIT_BRANCH
+            echo branchName
             sh "ip address"
             sh 'env > env.txt' 
             for (String i : readFile('env.txt').split("\r?\n")) {
                      println i
             }
+            
     }    
 }
