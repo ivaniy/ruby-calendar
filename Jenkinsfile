@@ -30,6 +30,7 @@ pipeline {
                sh "git branch"
                sh "pwd"
                sh "ls -al"
+               echo "finished"
             }
         }
     }
