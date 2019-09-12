@@ -1,8 +1,8 @@
 pipeline {
     agent { label 'master' }
-    options {
-      timestamps()
-    }
+//    options {
+//      timestamps()
+//    }
     stages {
         stage('Build') {
             agent {label 'Ruby'}
