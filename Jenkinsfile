@@ -4,7 +4,7 @@ pipeline {
 //      timestamps()
 //    }
     stages {
-        stage('Build') {
+        stage('Remote') {
             agent {label 'Ruby'}
             when { 
                 changeRequest() 
@@ -14,7 +14,7 @@ pipeline {
                 sh "ip address"
             }
         }
-        stage('Test on Linux') {
+        stage('Local') {
             steps {
                  sh("printenv")
             }
