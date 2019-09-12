@@ -10,7 +10,7 @@ pipeline {
                 changeRequest() 
             }
             steps {
-                echo "Building...  ${pullRequest.id}"
+                sh("printenv")
                 sh "ip address"
             }
         }
