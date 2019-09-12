@@ -10,8 +10,7 @@ pipeline {
                 changeRequest() 
             }
             steps {
-                echo "Building...  ${pullRequest.id}"
-                sh "ip address"
+                echo "Building...  ${pullRequest.id}
             }
         }
         stage('Test on Linux') {
