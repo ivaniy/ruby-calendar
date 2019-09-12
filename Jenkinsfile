@@ -19,7 +19,7 @@ pipeline {
                  sh("printenv")
             }
         }
-        stage('Test on Windows') {
+        stage('ruby no 2') {
             agent {
                 label 'Ruby'
             }
