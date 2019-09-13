@@ -23,7 +23,6 @@ pipeline {
 //                label 'Ruby'
 //            }
             steps {
-               sh("printenv")
                sh "whoami"
                echo 'deploying'
                sh "git branch"
