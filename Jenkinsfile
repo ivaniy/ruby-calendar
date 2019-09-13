@@ -4,13 +4,14 @@ pipeline {
 //      timestamps()
 //    }
     stages {
-        stage('Remote') {
-            when { 
-                changeRequest() 
+        stage('Test branches from feature to develop') {
+            agent {label 'master'}
+            when {
+                // Only say hello if a "greeting" is requested
+                expression { CHANGE_ID != null && CHANGE_BRANCH ==~ /^feature.*/ && CHANGE_TARGET != "develop"}
             }
             steps {
-                sh("printenv")
-                sh "ip address"
+               sh 'exit 1'   
             }
         }
         stage('Local') {
