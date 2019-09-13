@@ -1,10 +1,14 @@
 pipeline {
-    agent any
-
+    agent null
     stages {
+        agent {label 'master'}
         stage('Build') {
+            when {
+                // Only say hello if a "greeting" is requested
+                expression { CHANGE_ID != null && CHANGE_BRANCH ==~ /feature(*)/ && CHANGE_TARGET != develop}
+            }
             steps {
-                echo 'Building..'
+               sh exit 1   
             }
         }
         stage('Test') {
