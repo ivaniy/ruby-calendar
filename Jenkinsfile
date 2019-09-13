@@ -8,7 +8,7 @@ pipeline {
                 expression { CHANGE_ID != null && CHANGE_BRANCH ==~ /feature(*)/ && CHANGE_TARGET != develop}
             }
             steps {
-               sh exit 1   
+               sh 'exit 1'   
             }
         }
         stage('Test') {
