@@ -1,8 +1,8 @@
 pipeline {
     agent none
     stages {
-        agent {label 'master'}
         stage('Build') {
+            agent {label 'master'}
             when {
                 // Only say hello if a "greeting" is requested
                 expression { CHANGE_ID != null && CHANGE_BRANCH ==~ /feature(*)/ && CHANGE_TARGET != develop}
