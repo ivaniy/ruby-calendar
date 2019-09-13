@@ -1,11 +1,10 @@
 pipeline {
-    agent { label 'master' }
+    agent any //{ label 'master' }
 //    options {
 //      timestamps()
 //    }
     stages {
         stage('Remote') {
-            agent {label 'Ruby'}
             when { 
                 changeRequest() 
             }
@@ -20,9 +19,9 @@ pipeline {
             }
         }
         stage('ruby no 2') {
-            agent {
-                label 'Ruby'
-            }
+//            agent {
+//                label 'Ruby'
+//            }
             steps {
                sh("printenv")
                sh "whoami"
