@@ -14,6 +14,14 @@ pipeline {
                sh 'exit 1'   
             }
         }
+        stage ('SonarQube code test') {
+            agent {label 'master'}
+            steps {
+                withSonarQubeEnv('SonarQube' credentialsId: 'SonarToken' sonar.projectKey: 'my_project' sonar.projectName: 'Calenda project') {
+                    
+                }
+            }
+        }
         stage('Local') {
             steps {
                  sh("printenv")
