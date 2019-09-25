@@ -18,7 +18,7 @@ pipeline {
             agent {label 'master'}
             steps {
                 withSonarQubeEnv('credentialsId: 'SonarToken') {
-                    
+                    sh("printenv")
                 }
             }
         }
