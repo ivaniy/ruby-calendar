@@ -1,19 +1,22 @@
- pipeline {
-    agent any 
+pipeline {
+    agent any //{ label 'master' }
+    options {
+      timestamps()
+    }
     stages {
-        stage('Build') { 
-            steps {
-                echo 'Building...'
+        stage ('SonarQube code quality test') {
+            agent {label 'master'}
+            environment {
+                scannerHome = tool 'SonarScanner'
             }
-        }    
-        stage('Test') { 
             steps {
-                echo 'testing' 
-            }
-        }
-        stage('Deploy') { 
-            steps {
-               echo 'deploying'
+                sh("printenv")
+                withSonarQubeEnv(installationName: 'SonarQube', credentialsId: 'SonarToken') {
+                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${GIT_BRANCH}  -Dsonar.projectName=\'${GIT_BRANCH}\'"
+                }
+                timeout(time: 5, unit: 'MINUTES') {
+                   waitForQualityGate abortPipeline: true
+                }
             }
         }
     }
