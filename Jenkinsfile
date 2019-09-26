@@ -17,7 +17,7 @@ pipeline {
         stage ('SonarQube code test') {
             agent {label 'master'}
             steps {
-                withSonarQubeEnv('credentialsId: 'SonarToken') {
+                withSonarQubeEnv(credentialsId: 'SonarToken') {
                     sh("printenv")
                 }
             }
