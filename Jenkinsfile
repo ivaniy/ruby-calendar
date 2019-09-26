@@ -23,16 +23,12 @@ pipeline {
                 withSonarQubeEnv(installationName: 'SonarQube', credentialsId: 'SonarToken') {
                     sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${CHANGE_BRANCH}  -Dsonar.projectName=\'${CHANGE_BRANCH}\'"
                 }
+                timeout(time: 10, unit: 'MINUTES') {
+                   waitForQualityGate abortPipeline: true
+                }
             }
         }
-        stage("Quality Gate"){
-          timeout(time: 1, unit: 'HOURS') {
-              def qg = waitForQualityGate()
-              if (qg.status != 'OK') {
-                  error "Pipeline aborted due to quality gate failure: ${qg.status}"
-              }
-          }
-        }
+
         stage('Local') {
             steps {
                  sh("printenv")
