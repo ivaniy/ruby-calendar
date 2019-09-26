@@ -1,21 +1,37 @@
- pipeline {
-    node('Ruby') {
-    stages {
-        stage('Build') { 
-            steps {
-                echo 'Building...'
-            }
-        }    
-        stage('Test') { 
-            steps {
-                echo 'testing' 
-            }
-        }
-        stage('Deploy') { 
-            steps {
-               echo 'deploying'
-            }
-        }
+pipeline {
+    agent { label 'master' }
+    options {
+      timestamps()
     }
+    stages {
+        stage('Build') {
+            agent {label 'Ruby'}
+            when { 
+                changeRequest() 
+            }
+            steps {
+                echo "Building...  ${pullRequest.id}
+            }
+        }
+        stage('Test on Linux') {
+            steps {
+                 sh("printenv")
+                 sh "ls -al"
+            }
+        }
+        stage('Test on Windows') {
+            agent {
+                label 'Ruby'
+            }
+            steps {
+               sh("printenv")
+               sh "whoami"
+               echo 'deploying'
+               sh "git branch"
+               sh "pwd"
+               sh "ls -al"
+               echo "maybe finished"
+            }
+        }
     }
 }

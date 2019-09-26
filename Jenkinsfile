@@ -1,20 +1,49 @@
 pipeline {
-    agent any
-
+    agent any //{ label 'master' }
+//    options {
+//      timestamps()
+//    }
     stages {
-        stage('Build') {
+        stage('Test branches from feature to develop') {
+            agent {label 'master'}
+            when {
+                // Only say hello if a "greeting" is requested
+                expression { CHANGE_ID != null && CHANGE_BRANCH ==~ /^feature.*/ && CHANGE_TARGET != "develop"}
+            }
             steps {
-                echo 'Building..'
+               sh 'exit 1'   
             }
         }
-        stage('Test') {
+        stage ('SonarQube code test') {
+            agent {label 'master'}
+            environment {
+                scannerHome = tool 'SonarScanner'
+            }
             steps {
-                echo 'Testing..'
+                withSonarQubeEnv(installationName: 'SonarQube', credentialsId: 'SonarToken') {
+                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${CHANGE_BRANCH}  -Dsonar.projectName=\'${CHANGE_BRANCH}\'"
+                }
+                timeout(time: 5, unit: 'MINUTES') {
+                   waitForQualityGate abortPipeline: true
+                }
             }
         }
-        stage('Deploy') {
+
+        stage('Local') {
             steps {
-                echo 'Deploying....'
+                 sh("printenv")
+            }
+        }
+        stage('ruby no 2') {
+//            agent {
+//                label 'Ruby'
+//            }
+            steps {
+               sh "whoami"
+               sh "git branch"
+               sh "pwd"
+               sh "ls -al"
+               echo "finished"
             }
         }
     }
