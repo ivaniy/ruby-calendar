@@ -1,36 +1,22 @@
 pipeline {
-    agent { label 'master' }
+    agent any //{ label 'master' }
     options {
       timestamps()
     }
     stages {
-        stage('Build') {
-            agent {label 'Ruby'}
-            when { 
-                changeRequest() 
+        stage ('SonarQube code quality test') {
+            agent {label 'master'}
+            environment {
+                scannerHome = tool 'SonarScanner'
             }
             steps {
-                echo "Building...  ${pullRequest.id}
-            }
-        }
-        stage('Test on Linux') {
-            steps {
-                 sh("printenv")
-                 sh "ls -al"
-            }
-        }
-        stage('Test on Windows') {
-            agent {
-                label 'Ruby'
-            }
-            steps {
-               sh("printenv")
-               sh "whoami"
-               echo 'deploying'
-               sh "git branch"
-               sh "pwd"
-               sh "ls -al"
-               echo "maybe finished"
+                sh("printenv")
+                withSonarQubeEnv(installationName: 'SonarQube', credentialsId: 'SonarToken') {
+                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${GIT_BRANCH}  -Dsonar.projectName=\'${GIT_BRANCH}\'"
+                }
+                timeout(time: 5, unit: 'MINUTES') {
+                   waitForQualityGate abortPipeline: true
+                }
             }
         }
     }
