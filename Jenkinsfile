@@ -22,7 +22,7 @@ pipeline {
             steps {
                 withSonarQubeEnv(installationName: 'SonarQube', credentialsId: 'SonarToken') {
                     sh("printenv")
-                    sh "${scannerHome}/bin/sonar-scanner"
+                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${CHANGE_BRANCH}  -Dsonar.projectName=\'${CHANGE_BRANCH}\'"
                 }
             }
         }
