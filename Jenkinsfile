@@ -40,7 +40,6 @@ pipeline {
 //            }
             steps {
                sh "whoami"
-               echo 'deploying'
                sh "git branch"
                sh "pwd"
                sh "ls -al"
