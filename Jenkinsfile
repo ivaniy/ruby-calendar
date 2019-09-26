@@ -16,9 +16,13 @@ pipeline {
         }
         stage ('SonarQube code test') {
             agent {label 'master'}
+            environment {
+                scannerHome = tool 'SonarScanner'
+            }
             steps {
                 withSonarQubeEnv(installationName: 'SonarQube', credentialsId: 'SonarToken') {
                     sh("printenv")
+                    sh "${scannerHome}/bin/sonar-scanner"
                 }
             }
         }
