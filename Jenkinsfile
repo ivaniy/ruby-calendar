@@ -23,7 +23,7 @@ pipeline {
                 withSonarQubeEnv(installationName: 'SonarQube', credentialsId: 'SonarToken') {
                     sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${CHANGE_BRANCH}  -Dsonar.projectName=\'${CHANGE_BRANCH}\'"
                 }
-                timeout(time: 10, unit: 'MINUTES') {
+                timeout(time: 5, unit: 'MINUTES') {
                    waitForQualityGate abortPipeline: true
                 }
             }
