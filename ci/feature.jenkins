@@ -12,7 +12,7 @@ pipeline {
             steps {
                 sh("printenv")
                 withSonarQubeEnv(installationName: 'SonarQube', credentialsId: 'SonarToken') {
-                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${CHANGE_BRANCH}  -Dsonar.projectName=\'${GIT_BRANCH}\'"
+                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=${GIT_BRANCH}  -Dsonar.projectName=\'${GIT_BRANCH}\'"
                 }
                 timeout(time: 5, unit: 'MINUTES') {
                    waitForQualityGate abortPipeline: true
